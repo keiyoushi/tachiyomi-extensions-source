@@ -1,9 +1,0 @@
-ext {
-    extName = 'ManhwaBookShelf'
-    extClass = '.ManhwaBookShelf'
-    themePkg = 'madara'
-    baseUrl = 'https://manhwabookshelf.com'
-    overrideVersionCode = 0
-}
-
-apply from: "$rootDir/common.gradle"
