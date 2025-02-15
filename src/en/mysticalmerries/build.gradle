@@ -1,9 +1,0 @@
-ext {
-    extName = 'Mystical Merries'
-    extClass = '.MysticalMerries'
-    themePkg = 'madara'
-    baseUrl = 'https://mysticalmerries.com'
-    overrideVersionCode = 2
-}
-
-apply from: "$rootDir/common.gradle"
