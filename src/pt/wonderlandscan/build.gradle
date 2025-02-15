@@ -1,9 +1,0 @@
-ext {
-    extName = 'Wonderland Scan'
-    extClass = '.WonderlandScan'
-    themePkg = 'madara'
-    baseUrl = 'https://wonderlandscan.com'
-    overrideVersionCode = 3
-}
-
-apply from: "$rootDir/common.gradle"
