@@ -1,9 +1,0 @@
-ext {
-    extName = 'Lady Manga'
-    extClass = '.LadyManga'
-    themePkg = 'madara'
-    baseUrl = 'https://ladymanga.com'
-    overrideVersionCode = 0
-}
-
-apply from: "$rootDir/common.gradle"
