@@ -1,9 +1,0 @@
-ext {
-    extName = 'MangaRolls'
-    extClass = '.MangaRolls'
-    themePkg = 'madara'
-    baseUrl = 'https://mangarolls.net'
-    overrideVersionCode = 1
-}
-
-apply from: "$rootDir/common.gradle"
