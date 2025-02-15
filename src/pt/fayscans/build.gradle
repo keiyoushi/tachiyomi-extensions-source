@@ -1,9 +1,0 @@
-ext {
-    extName = 'Fay Scans'
-    extClass = '.FayScans'
-    themePkg = 'madara'
-    baseUrl = 'https://fayscans.net'
-    overrideVersionCode = 2
-}
-
-apply from: "$rootDir/common.gradle"
