@@ -1,9 +1,0 @@
-ext {
-    extName = 'Kofi Scans'
-    extClass = '.KofiScans'
-    themePkg = 'mangathemesia'
-    baseUrl = 'https://kofiscans.me'
-    overrideVersionCode = 0
-}
-
-apply from: "$rootDir/common.gradle"
