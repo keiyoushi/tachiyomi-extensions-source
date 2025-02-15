@@ -1,9 +1,0 @@
-ext {
-    extName = 'Nabi Scans'
-    extClass = '.NabiScans'
-    themePkg = 'madara'
-    baseUrl = 'https://nabiscans.com'
-    overrideVersionCode = 0
-}
-
-apply from: "$rootDir/common.gradle"
