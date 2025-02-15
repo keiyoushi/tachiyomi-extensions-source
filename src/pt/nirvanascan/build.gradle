@@ -1,9 +1,0 @@
-ext {
-    extName = 'Nirvana Scan'
-    extClass = '.NirvanaScan'
-    themePkg = 'madara'
-    baseUrl = 'https://nirvanascan.com'
-    overrideVersionCode = 0
-}
-
-apply from: "$rootDir/common.gradle"
