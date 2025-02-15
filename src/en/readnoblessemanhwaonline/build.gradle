@@ -1,9 +1,0 @@
-ext {
-    extName = 'Read Noblesse Manhwa Online'
-    extClass = '.ReadNoblesseManhwaOnline'
-    themePkg = 'mangacatalog'
-    baseUrl = 'https://ww2.readnoblesse.com'
-    overrideVersionCode = 0
-}
-
-apply from: "$rootDir/common.gradle"
