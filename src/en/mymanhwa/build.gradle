@@ -1,9 +1,0 @@
-ext {
-    extName = 'My Manhwa'
-    extClass = '.MyManhwa'
-    themePkg = 'madara'
-    baseUrl = 'https://mymanhwa.net'
-    overrideVersionCode = 0
-}
-
-apply from: "$rootDir/common.gradle"
