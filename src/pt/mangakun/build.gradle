@@ -1,9 +1,0 @@
-ext {
-    extName = 'Mangá Kun'
-    extClass = '.MangaKun'
-    themePkg = 'mangathemesia'
-    baseUrl = 'https://mangakun.com.br'
-    overrideVersionCode = 0
-}
-
-apply from: "$rootDir/common.gradle"
