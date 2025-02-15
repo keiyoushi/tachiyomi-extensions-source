@@ -1,9 +1,0 @@
-ext {
-    extName = 'Manga-Scan'
-    extClass = '.MangaScan'
-    themePkg = 'mmrcms'
-    baseUrl = 'https://mangascan-fr.net'
-    overrideVersionCode = 5
-}
-
-apply from: "$rootDir/common.gradle"
