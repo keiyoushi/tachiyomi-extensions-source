@@ -1,9 +1,0 @@
-ext {
-    extName = 'Gatemanga'
-    extClass = '.Gatemanga'
-    themePkg = 'madara'
-    baseUrl = 'https://gatemanga.com'
-    overrideVersionCode = 2
-}
-
-apply from: "$rootDir/common.gradle"
