@@ -1,9 +1,0 @@
-ext {
-    extName = 'Lunar Scans'
-    extClass = '.LunarScans'
-    themePkg = 'mangathemesia'
-    baseUrl = 'https://gloryscans.fr'
-    overrideVersionCode = 0
-}
-
-apply from: "$rootDir/common.gradle"
