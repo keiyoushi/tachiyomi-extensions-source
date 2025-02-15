@@ -1,9 +1,0 @@
-ext {
-    extName = 'Babel Wuxia'
-    extClass = '.BabelWuxia'
-    themePkg = 'madara'
-    baseUrl = 'https://babelwuxia.com'
-    overrideVersionCode = 1
-}
-
-apply from: "$rootDir/common.gradle"
