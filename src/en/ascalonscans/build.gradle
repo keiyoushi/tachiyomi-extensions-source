@@ -1,9 +1,0 @@
-ext {
-    extName = 'AscalonScans'
-    extClass = '.AscalonScans'
-    themePkg = 'mangathemesia'
-    baseUrl = 'https://ascalonscans.com'
-    overrideVersionCode = 1
-}
-
-apply from: "$rootDir/common.gradle"
