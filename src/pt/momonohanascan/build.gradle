@@ -1,9 +1,0 @@
-ext {
-    extName = 'Momo no Hana Scan'
-    extClass = '.MomoNoHanaScan'
-    themePkg = 'madara'
-    baseUrl = 'https://momonohanascan.com'
-    overrideVersionCode = 1
-}
-
-apply from: "$rootDir/common.gradle"
