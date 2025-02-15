@@ -1,9 +1,0 @@
-ext {
-    extName = 'Seraph Manga'
-    extClass = '.HyperionScans'
-    themePkg = 'mangathemesia'
-    baseUrl = 'https://www.seraphmanga.com'
-    overrideVersionCode = 0
-}
-
-apply from: "$rootDir/common.gradle"
