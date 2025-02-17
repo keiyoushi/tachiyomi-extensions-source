@@ -1,0 +1,8 @@
+ext {
+    extName = 'NovelFull'
+    extClass = '.NovelFullFactory'
+    extVersionCode = 1
+    isNsfw = true
+}
+
+apply from: "$rootDir/common.gradle"
