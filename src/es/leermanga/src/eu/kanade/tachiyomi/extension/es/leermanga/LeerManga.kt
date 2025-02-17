@@ -80,19 +80,16 @@ class LeerManga : Madara(
 
     // =============================== Filters ===============================
 
-    private var genresList: List<Genre> = emptyList()
-
     override fun getFilterList(): FilterList {
         val filters = mutableListOf<Filter<*>>()
         if (genresList.isNotEmpty()) {
             filters += listOf(
-                Filter.Header(intl["genre_filter_header"]),
                 GenreGroup(
                     displayName = intl["genre_filter_title"],
                     genres = genresList,
                 ),
             )
-        } else if (fetchGenres) {
+        } else {
             filters += Filter.Header(intl["genre_missing_warning"])
         }
         return FilterList(filters)

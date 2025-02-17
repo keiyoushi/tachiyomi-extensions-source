@@ -104,35 +104,22 @@ class ManhwahentaiMe : Madara("Manhwahentai.me", "https://manhwahentai.me", "en"
         intl["order_by_filter_new"] to "new-manga",
     )
 
-    private var genresList: List<Pair<String, String>> = emptyList()
-    private var fetchGenresAttempts: Int = 0
-
-    private fun fetchGenresMe() {
-        if (fetchGenres && fetchGenresAttempts < 3 && genresList.isEmpty()) {
-            try {
-                genresList = client.newCall(genresRequest()).execute()
-                    .use { parseGenresMe(it.asJsoup()) }
-            } catch (_: Exception) {
-            } finally {
-                fetchGenresAttempts++
-            }
-        }
-    }
-
-    private fun parseGenresMe(document: Document): List<Pair<String, String>> {
+    override fun parseGenres(document: Document): List<Genre> {
         return document.selectFirst("div.genres")
             ?.select("a")
             .orEmpty()
             .map { a ->
-                a.ownText() to
-                    a.attr("href").substringBeforeLast("/").substringAfterLast("/")
+                Genre(
+                    a.ownText(),
+                    a.attr("href").substringBeforeLast("/").substringAfterLast("/"),
+                )
             }.let {
-                listOf(("All" to "all")) + it
+                listOf(Genre("All", "all")) + it
             }
     }
 
     override fun getFilterList(): FilterList {
-        launchIO { fetchGenresMe() }
+        launchIO { fetchGenres() }
 
         val filters = mutableListOf(
             Filter.Header("All filters except the orderby filter are incompatible with each other"),
@@ -145,17 +132,16 @@ class ManhwahentaiMe : Madara("Manhwahentai.me", "https://manhwahentai.me", "en"
             ),
         )
 
-        if (genresList.isNotEmpty()) {
-            filters += listOf(
+        filters += if (genresList.isNotEmpty()) {
+            listOf(
                 Filter.Separator(),
-                Filter.Header(intl["genre_filter_header"]),
                 GenreConditionFilter(
                     title = intl["genre_filter_title"],
-                    options = genresList,
+                    options = genresList.map { it.name to it.id },
                 ),
             )
-        } else if (fetchGenres) {
-            filters += listOf(
+        } else {
+            listOf(
                 Filter.Separator(),
                 Filter.Header(intl["genre_missing_warning"]),
             )

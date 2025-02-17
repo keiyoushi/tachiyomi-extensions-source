@@ -68,7 +68,7 @@ class Manga18fx : Madara(
         if (query.isEmpty()) {
             filters.forEach { filter ->
                 if (filter is GenreFilter) {
-                    return GET(filter.vals[filter.state].second, headers)
+                    return GET(filter.vals[filter.state].id, headers)
                 }
             }
             return latestUpdatesRequest(page)
@@ -94,23 +94,22 @@ class Manga18fx : Madara(
 
     override fun chapterDateSelector() = "span.chapter-time"
 
-    class GenreFilter(val vals: List<Pair<String, String>>) :
-        Filter.Select<String>("Genre", vals.map { it.first }.toTypedArray())
+    class GenreFilter(val vals: List<Genre>) :
+        Filter.Select<String>("Genre", vals.map { it.name }.toTypedArray())
 
     private fun loadGenres(document: Document) {
         genresList = document.select(".header-bottom li a").map {
             val href = it.attr("href")
             val url = if (href.startsWith("http")) href else "$baseUrl/$href"
 
-            Pair(it.text(), url)
+            Genre(it.text(), url)
         }
     }
 
-    private var genresList: List<Pair<String, String>> = emptyList()
-    private var hardCodedTypes: List<Pair<String, String>> = listOf(
-        Pair("Manhwa", "$baseUrl/manga-genre/manhwa"),
-        Pair("Manhua", "$baseUrl/manga-genre/manhua"),
-        Pair("Raw", "$baseUrl/manga-genre/raw"),
+    private var hardCodedTypes: List<Genre> = listOf(
+        Genre("Manhwa", "$baseUrl/manga-genre/manhwa"),
+        Genre("Manhua", "$baseUrl/manga-genre/manhua"),
+        Genre("Raw", "$baseUrl/manga-genre/raw"),
     )
 
     override fun getFilterList(): FilterList {

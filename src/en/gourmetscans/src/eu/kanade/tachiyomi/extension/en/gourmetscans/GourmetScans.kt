@@ -61,24 +61,22 @@ class GourmetScans : Madara(
     override fun genresRequest(): Request = GET("$baseUrl/$mangaSubString", headers)
 
     override fun parseGenres(document: Document): List<Genre> {
-        genresList = document.select("div.row.genres ul li a")
+        return document.select("div.row.genres ul li a")
             .orEmpty()
             .map { li ->
-                Pair(
+                Genre(
                     li.text(),
                     li.attr("href").split("/").last { it.isNotBlank() },
                 )
             }
-
-        return emptyList()
     }
 
-    private var genresList: List<Pair<String, String>> = emptyList()
-
-    class GenreFilter(vals: List<Pair<String, String>>) :
-        UriPartFilter("Genre", vals.toTypedArray())
+    class GenreFilter(vals: List<Genre>) :
+        UriPartFilter("Genre", vals.map { Pair(it.name, it.id) }.toTypedArray())
 
     override fun getFilterList(): FilterList {
+        launchIO { fetchGenres() }
+
         val filters = buildList(4) {
             add(YearFilter(intl["year_filter_title"]))
             add(
@@ -93,7 +91,7 @@ class GourmetScans : Madara(
             if (genresList.isEmpty()) {
                 add(Filter.Header(intl["genre_missing_warning"]))
             } else {
-                add(GenreFilter(listOf(Pair("<select>", "")) + genresList))
+                add(GenreFilter(listOf(Genre("<select>", "")) + genresList))
             }
         }
 

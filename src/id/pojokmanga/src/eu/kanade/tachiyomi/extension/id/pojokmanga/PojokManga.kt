@@ -83,7 +83,7 @@ class PojokManga : Madara("Pojok Manga", "https://pojokmanga.info", "id", Simple
 
     override val mangaDetailsSelectorTag = "#toNotBeUsed"
 
-    protected class ProjectFilter : UriPartFilter(
+    private class ProjectFilter : UriPartFilter(
         "Filter Project",
         arrayOf(
             Pair("Show all manga", ""),

@@ -82,7 +82,12 @@ abstract class Madara(
     /**
      * Automatically fetched genres from the source to be used in the filters.
      */
-    private var genresList: List<Genre> = emptyList()
+    protected open var genresList: List<Genre> = emptyList()
+
+    /**
+     * Whether genres have been fetched
+     */
+    private var genresFetched: Boolean = false
 
     /**
      * Inner variable to control how much tries the genres request was called.
@@ -237,11 +242,14 @@ abstract class Madara(
 
     override fun fetchSearchManga(page: Int, query: String, filters: FilterList): Observable<MangasPage> {
         if (query.startsWith(URL_SEARCH_PREFIX)) {
-            val mangaUrl = "/$mangaSubString/${query.substringAfter(URL_SEARCH_PREFIX)}/"
-            return client.newCall(GET("$baseUrl$mangaUrl", headers))
+            val mangaUrl = baseUrl.toHttpUrl().newBuilder().apply {
+                addPathSegment(mangaSubString)
+                addPathSegment(query.substringAfter(URL_SEARCH_PREFIX))
+            }.build()
+            return client.newCall(GET(mangaUrl, headers))
                 .asObservableSuccess().map { response ->
                     val manga = mangaDetailsParse(response).apply {
-                        url = mangaUrl
+                        setUrlWithoutDomain(mangaUrl.toString())
                     }
 
                     MangasPage(listOf(manga), false)
@@ -1069,10 +1077,17 @@ abstract class Madara(
      * Fetch the genres from the source to be used in the filters.
      */
     protected fun fetchGenres() {
-        if (fetchGenres && fetchGenresAttempts < 3 && genresList.isEmpty()) {
+        if (fetchGenres && fetchGenresAttempts < 3 && !genresFetched) {
             try {
-                genresList = client.newCall(genresRequest()).execute()
+                client.newCall(genresRequest()).execute()
                     .use { parseGenres(it.asJsoup()) }
+                    .also {
+                        genresFetched = true
+                    }
+                    .takeIf { it.isNotEmpty() }
+                    ?.also {
+                        genresList = it
+                    }
             } catch (_: Exception) {
             } finally {
                 fetchGenresAttempts++
