@@ -1,9 +1,8 @@
 ext {
     extName = 'Manhastro'
     extClass = '.Manhastro'
-    themePkg = 'madara'
     baseUrl = 'https://manhastro.com'
-    overrideVersionCode = 6
+    extVersionCode = 46
     isNsfw = true
 }
 
