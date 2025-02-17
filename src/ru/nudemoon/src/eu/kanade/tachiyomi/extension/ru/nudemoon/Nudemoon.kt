@@ -16,6 +16,7 @@ import eu.kanade.tachiyomi.source.model.SManga
 import eu.kanade.tachiyomi.source.online.ParsedHttpSource
 import eu.kanade.tachiyomi.util.asJsoup
 import okhttp3.Headers
+import okhttp3.HttpUrl
 import okhttp3.Request
 import okhttp3.Response
 import org.jsoup.nodes.Document
@@ -181,23 +182,7 @@ class Nudemoon : ParsedHttpSource(), ConfigurableSource {
         val allPageElement = document.select("td.button a:contains(Все главы)")
 
         if (allPageElement.isEmpty()) {
-            add(
-                SChapter.create().apply {
-                    val chapterName = document.select("table td.bg_style1 h1").text()
-                    val chapterUrl = response.request.url.toString()
-                    setUrlWithoutDomain(chapterUrl)
-                    name = "$chapterName Сингл"
-                    scanlator = document.select("table.news_pic2 a[href*=perevod]").text()
-                    date_upload = document.select("table.news_pic2 span.small2:contains(/)").text().let {
-                        try {
-                            dateParseSlash.parse(it)?.time ?: 0L
-                        } catch (e: Exception) {
-                            0
-                        }
-                    }
-                    chapter_number = 0F
-                },
-            )
+            add(chapterFromSinglePage(document, response.request.url))
         } else {
             var pageListDocument: Document
             val pageListLink = allPageElement.attr("href")
@@ -210,11 +195,34 @@ class Nudemoon : ParsedHttpSource(), ConfigurableSource {
                 }
                 pageListDocument = this.asJsoup()
             }
-            pageListDocument.select(chapterListSelector())
-                .forEach {
-                    add(chapterFromElement(it))
-                }
+            if (pageListDocument.select(chapterListSelector()).isEmpty()) {
+                add(chapterFromSinglePage(document, response.request.url))
+            } else {
+                pageListDocument.select(chapterListSelector())
+                    .forEach {
+                        add(chapterFromElement(it))
+                    }
+            }
         }
+    }
+
+    private fun chapterFromSinglePage(document: Document, responseUrl: HttpUrl): SChapter = SChapter.create().apply {
+        val chapterName = document.select("table td.bg_style1 h1").text()
+        val chapterUrl = responseUrl.toString()
+        setUrlWithoutDomain(chapterUrl)
+        if (url.contains(baseUrl)) {
+            url = url.replace(baseUrl, "")
+        }
+        name = "$chapterName Сингл"
+        scanlator = document.select("table.news_pic2 a[href*=perevod]").text()
+        date_upload = document.select("table.news_pic2:has(a[href*=perevod]) span.small2:not(:contains(тыс))").first()!!.text().replace("Май", "Мая").let {
+            try {
+                dateParseRu.parse(it)?.time ?: 0L
+            } catch (e: Exception) {
+                0
+            }
+        }
+        chapter_number = 0F
     }
 
     override fun chapterFromElement(element: Element): SChapter = SChapter.create().apply {
