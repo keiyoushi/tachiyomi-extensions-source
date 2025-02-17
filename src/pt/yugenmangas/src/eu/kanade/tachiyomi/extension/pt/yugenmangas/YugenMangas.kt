@@ -124,7 +124,8 @@ class YugenMangas : HttpSource() {
 
     override fun pageListRequest(chapter: SChapter): Request {
         val code = chapter.url.substringAfterLast("/")
-        val payload = json.encodeToString(SeriesDto(code)).toRequestBody(JSON_MEDIA_TYPE)
+        val key = "wKwPtVJhLSHoMJAiTAVnnggEils1zgHF"
+        val payload = json.encodeToString(SeriesWithKeyDto(code, key)).toRequestBody(JSON_MEDIA_TYPE)
         return POST("$BASE_API/chapters/chapter-info/", apiHeaders, payload)
     }
 

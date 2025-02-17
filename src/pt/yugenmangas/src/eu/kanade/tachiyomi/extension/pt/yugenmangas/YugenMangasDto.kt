@@ -122,6 +122,12 @@ class SeriesDto(
 )
 
 @Serializable
+class SeriesWithKeyDto(
+    val code: String,
+    val key: String,
+)
+
+@Serializable
 class SearchDto(
     val query: String,
 )
