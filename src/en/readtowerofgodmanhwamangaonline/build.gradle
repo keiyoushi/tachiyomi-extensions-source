@@ -1,9 +1,0 @@
-ext {
-    extName = 'Read Tower of God Manhwa Manga Online'
-    extClass = '.ReadTowerOfGodManhwaMangaOnline'
-    themePkg = 'mangacatalog'
-    baseUrl = 'https://ww1.readtowerofgod.com'
-    overrideVersionCode = 2
-}
-
-apply from: "$rootDir/common.gradle"

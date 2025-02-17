@@ -1,9 +1,0 @@
-ext {
-    extName = 'CopyPasteScan'
-    extClass = '.CopyPasteScan'
-    themePkg = 'madara'
-    baseUrl = 'https://www.cpscan.xyz'
-    overrideVersionCode = 2
-}
-
-apply from: "$rootDir/common.gradle"

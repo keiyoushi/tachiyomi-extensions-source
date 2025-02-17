@@ -1,9 +1,0 @@
-ext {
-    extName = 'Read Goblin Slayer Manga Online'
-    extClass = '.ReadGoblinSlayerMangaOnline'
-    themePkg = 'mangacatalog'
-    baseUrl = 'https://manga.watchgoblinslayer.com'
-    overrideVersionCode = 0
-}
-
-apply from: "$rootDir/common.gradle"

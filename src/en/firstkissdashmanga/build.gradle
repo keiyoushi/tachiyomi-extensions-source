@@ -1,9 +1,0 @@
-ext {
-    extName = '1st Kiss-Manga (unoriginal)'
-    extClass = '.FirstKissDashManga'
-    themePkg = 'madara'
-    baseUrl = 'https://1stkiss-manga.com'
-    overrideVersionCode = 0
-}
-
-apply from: "$rootDir/common.gradle"

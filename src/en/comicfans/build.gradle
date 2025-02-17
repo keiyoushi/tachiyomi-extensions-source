@@ -1,7 +1,0 @@
-ext {
-    extName = 'Comic Fans'
-    extClass = '.ComicFans'
-    extVersionCode = 1
-}
-
-apply from: "$rootDir/common.gradle"

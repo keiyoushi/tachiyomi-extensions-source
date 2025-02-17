@@ -1,9 +1,0 @@
-ext {
-    extName = 'AnonimusTLS'
-    extClass = '.AnonimusTls'
-    themePkg = 'mangaesp'
-    baseUrl = 'https://anonimustls.com'
-    overrideVersionCode = 0
-}
-
-apply from: "$rootDir/common.gradle"

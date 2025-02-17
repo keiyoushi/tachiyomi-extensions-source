@@ -1,9 +1,0 @@
-ext {
-    extName = 'SobatManKu'
-    extClass = '.SobatManKu'
-    themePkg = 'zeistmanga'
-    baseUrl = 'https://www.sobatmanku19.cab'
-    overrideVersionCode = 1
-}
-
-apply from: "$rootDir/common.gradle"

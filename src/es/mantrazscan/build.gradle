@@ -1,9 +1,0 @@
-ext {
-    extName = 'Mantraz Scan'
-    extClass = '.MantrazScan'
-    themePkg = 'madara'
-    baseUrl = 'https://artessupremas.com'
-    overrideVersionCode = 3
-}
-
-apply from: "$rootDir/common.gradle"

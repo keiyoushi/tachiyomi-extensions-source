@@ -1,9 +1,0 @@
-ext {
-    extName = 'Komiksan'
-    extClass = '.Komiksan'
-    themePkg = 'mangathemesia'
-    baseUrl = 'https://komiksan.link'
-    overrideVersionCode = 2
-}
-
-apply from: "$rootDir/common.gradle"

@@ -1,9 +1,0 @@
-ext {
-    extName = 'Manga-fast.com'
-    extClass = '.Mangafastcom'
-    themePkg = 'madara'
-    baseUrl = 'https://manga-fast.com'
-    overrideVersionCode = 3
-}
-
-apply from: "$rootDir/common.gradle"
