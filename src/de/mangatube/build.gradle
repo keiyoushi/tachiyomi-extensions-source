@@ -1,7 +1,7 @@
 ext {
     extName = 'Manga Tube'
     extClass = '.MangaTube'
-    extVersionCode = 2
+    extVersionCode = 3
 }
 
 apply from: "$rootDir/common.gradle"
