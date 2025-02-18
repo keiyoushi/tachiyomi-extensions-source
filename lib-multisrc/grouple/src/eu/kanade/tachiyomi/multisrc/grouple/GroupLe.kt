@@ -129,7 +129,7 @@ abstract class GroupLe(
             infoElement.select(".info-icon").attr("data-content").substringBeforeLast("/5</b><br/>")
                 .substringAfterLast(": <b>").replace(",", ".").toFloat() * 2
         val ratingVotes =
-            infoElement.select(".col-sm-7 .user-rating meta[itemprop=\"ratingCount\"]")
+            infoElement.select(".col-sm-6 .user-rating meta[itemprop=\"ratingCount\"]")
                 .attr("content")
         val ratingStar = when {
             ratingValue > 9.5 -> "★★★★★"
@@ -324,6 +324,9 @@ abstract class GroupLe(
                 throw Exception("Не удалось загрузить главу. Url: ${response.request.url}")
             }
             else -> {
+                if (html.contains("hprocessed") || html.contains("purchase-form")) {
+                    throw Exception("Эта глава платная. Используйте сайт, чтобы купить и прочитать ее.")
+                }
                 throw Exception("Дизайн сайта обновлен, для дальнейшей работы необходимо обновление дополнения")
             }
         }
