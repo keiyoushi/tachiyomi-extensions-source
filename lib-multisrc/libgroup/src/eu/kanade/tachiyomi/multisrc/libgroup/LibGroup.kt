@@ -313,37 +313,32 @@ abstract class LibGroup(
     override fun chapterListParse(response: Response): List<SChapter> {
         val slugUrl = response.request.url.toString().substringAfter("manga/").substringBefore("/chapters")
         val chaptersData = response.parseAs<Data<List<Chapter>>>()
-        if (chaptersData.data.isEmpty()) {
-            throw Exception("Нет глав")
-        }
-
+            .also { if (it.data.isEmpty()) throw Exception("Нет глав") }
         val sortingList = preferences.getString(SORTING_PREF, "ms_mixing")
-        val defaultBranchId = if (chaptersData.data.getBranchCount() > 1) { // excess request if branchesCount is only alone = slow update library witch rateLimitHost(apiDomain.toHttpUrl(), 1)
+        val defaultBranchId = if (sortingList == "ms_mixing" && chaptersData.data.getBranchCount() > 1) {
             runCatching { getDefaultBranch(slugUrl.substringBefore("-")).first().id }.getOrNull()
         } else {
             null
         }
 
-        val chapters = mutableListOf<SChapter>()
-        for (it in chaptersData.data.withIndex()) {
-            if (it.value.branchesCount > 1) {
-                for (currentBranch in it.value.branches.withIndex()) {
-                    if (currentBranch.value.branchId == defaultBranchId && sortingList == "ms_mixing") { // ms_mixing with default branch from api
-                        chapters.add(it.value.toSChapter(slugUrl, defaultBranchId, isScanUser()))
-                    } else if (defaultBranchId == null && sortingList == "ms_mixing") { // ms_mixing with first branch in chapter
-                        if (chapters.any { chpIt -> chpIt.chapter_number == it.value.number.toFloat() }) {
-                            chapters.add(it.value.toSChapter(slugUrl, currentBranch.value.branchId, isScanUser()))
-                        }
-                    } else if (sortingList == "ms_combining") { // ms_combining
-                        chapters.add(it.value.toSChapter(slugUrl, currentBranch.value.branchId, isScanUser()))
+        return chaptersData.data.flatMap { chapter ->
+            when {
+                chapter.branchesCount > 1 && sortingList == "ms_mixing" -> {
+                    listOf(
+                        chapter.branches
+                            .firstOrNull { it.branchId == defaultBranchId }
+                            ?.let { chapter.toSChapter(slugUrl, defaultBranchId, isScanUser()) }
+                            ?: chapter.toSChapter(slugUrl, chapter.branches.first().branchId, isScanUser()),
+                    )
+                }
+                chapter.branchesCount > 1 && sortingList == "ms_combining" -> {
+                    chapter.branches.map { branch ->
+                        chapter.toSChapter(slugUrl, branch.branchId, isScanUser())
                     }
                 }
-            } else {
-                chapters.add(it.value.toSChapter(slugUrl, isScanUser = isScanUser()))
+                else -> listOf(chapter.toSChapter(slugUrl, isScanUser = isScanUser()))
             }
-        }
-
-        return chapters.reversed()
+        }.reversed()
     }
 
     override fun fetchChapterList(manga: SManga): Observable<List<SChapter>> {
