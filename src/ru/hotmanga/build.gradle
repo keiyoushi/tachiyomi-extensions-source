@@ -1,0 +1,8 @@
+ext {
+    extName = 'HotManga'
+    extClass = '.HotManga'
+    extVersionCode = 1
+    isNsfw = true
+}
+
+apply from: "$rootDir/common.gradle"
