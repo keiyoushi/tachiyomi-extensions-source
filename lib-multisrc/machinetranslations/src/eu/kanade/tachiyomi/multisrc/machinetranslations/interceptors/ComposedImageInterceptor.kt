@@ -77,7 +77,7 @@ class ComposedImageInterceptor(
 
         dialogues.forEach { dialog ->
             val textPaint = createTextPaint(selectFontFamily(dialog.type))
-            val dialogBox = createDialogBox(dialog, textPaint, bitmap)
+            val dialogBox = createDialogBox(dialog, textPaint)
             val y = getYAxis(textPaint, dialog, dialogBox)
             canvas.draw(textPaint, dialogBox, dialog, dialog.x1, y)
         }
@@ -209,7 +209,7 @@ class ComposedImageInterceptor(
         }
     }
 
-    private fun createDialogBox(dialog: Dialog, textPaint: TextPaint, bitmap: Bitmap): StaticLayout {
+    private fun createDialogBox(dialog: Dialog, textPaint: TextPaint): StaticLayout {
         var dialogBox = createBoxLayout(dialog, textPaint)
 
         /**
@@ -222,7 +222,6 @@ class ComposedImageInterceptor(
 
         textPaint.color = Color.BLACK
         textPaint.bgColor = Color.WHITE
-        textPaint.strokeWidth = 2F
 
         return dialogBox
     }
@@ -262,6 +261,7 @@ class ComposedImageInterceptor(
         val foregroundColor = textPaint.color
         val style = textPaint.style
 
+        textPaint.strokeWidth = 5F
         textPaint.color = textPaint.bgColor
         textPaint.style = Paint.Style.FILL_AND_STROKE
 
